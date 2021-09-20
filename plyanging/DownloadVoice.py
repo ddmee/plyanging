@@ -23,6 +23,8 @@ class DownloadVoice:
 
         self.phrase = phrase
         self.directory = directory
+        # create directory if it's missing
+        self.directory.mkdir(parents=True, exist_ok=True)
 
     def phrase_filepath(self, phrase_text:str) -> Path:
         """Theres no guarantee the path will not clash with another phrase."""
