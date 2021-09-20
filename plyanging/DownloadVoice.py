@@ -42,6 +42,12 @@ class DownloadVoice:
         tts.save(filepath)
         return filepath
 
+    def english_voice_path(self) -> Path:
+        return self.phrase_filepath(phrase_text=self.phrase.english_text)
+
+    def german_voice_path(self) -> Path:
+        return self.phrase_filepath(phrase_text=self.phrase.german_text)
+
     def save_german_voice(self) -> Path:
         return self.save_voice(phrase_text=self.phrase.german_text, lang='de')
 
