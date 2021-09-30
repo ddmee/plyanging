@@ -1,7 +1,7 @@
 # stdlib
 from pathlib import Path
 import time
-from typing import Generator
+from typing import Sequence
 # 3rd party
 # local
 from plyanging.Phrase import Phrase
@@ -20,10 +20,10 @@ class ModeListen:
         play sound for german_voice twice. Delay 2 seconds between plays.
         sleep 2 seconds.
     """
-    def __init__(self, phrases: Generator[Phrase, None, None],
+    def __init__(self, phrases: Sequence[Phrase],
                        sound_directory: Path):
         """
-        :param phrases: generator, list of phrases to run through.
+        :param phrases: sequence of phrases, list of phrases to run through.
         :param sound_directory: path, location to load phrase sound samples from.
         """
         self.phrases = phrases
@@ -81,5 +81,5 @@ class ModeListen:
 
     def cmdline(self) -> None:
         """Run ModeListen in cmdline mode."""
-        for count, phrase in enumerate(self.phrases()):
+        for count, phrase in enumerate(self.phrases):
             self._phrase_loop(phrase=phrase, count=count)
