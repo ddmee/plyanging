@@ -21,13 +21,16 @@ class ModeListen:
         sleep 2 seconds.
     """
     def __init__(self, phrases: Sequence[Phrase],
-                       sound_directory: Path):
+                       sound_directory: Path,
+                       non_stop:bool=False):
         """
         :param phrases: sequence of phrases, list of phrases to run through.
         :param sound_directory: path, location to load phrase sound samples from.
+        :optparam non_stop: bool, whether to wait for user input between phraeses.
         """
         self.phrases = phrases
         self.sound_directory = sound_directory
+        self.non_stop = non_stop
 
     def _user_wants_next_phrase(self) -> bool:
         """Presents user with choice whether wants to repeat the current
@@ -73,6 +76,9 @@ class ModeListen:
     def _phrase_loop(self, phrase:Phrase, count:int) -> None:
         while True:
             self._play_english_german(phrase=phrase, count=count)
+            if self.non_stop:
+                break
+
             next_phrase = self._user_wants_next_phrase()
             if next_phrase:
                 break
