@@ -9,6 +9,8 @@ gtts = "*"
 filetype = {editable = true, git = "https://github.com/h2non/filetype.py"}
 playsound = "*"
 pyobjc = "*"
+nltk = "*"
+googletrans = "==3.1.0a0"
 
 [dev-packages]
 pytest = "*"

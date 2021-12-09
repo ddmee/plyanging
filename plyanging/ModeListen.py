@@ -65,11 +65,14 @@ class ModeListen:
         # play english sound once.
         print('English: {0}'.format(phrase.english_text))
         play_sound.english_voice()
-        time.sleep(2)
+        time.sleep(1)
         # play german sound twice.
         print('German: {0}'.format(phrase.german_text))
         play_sound.german_voice()
         time.sleep(2)
+        play_sound.english_voice()
+        time.sleep(1)
+
         play_sound.german_voice()
         print('-' * 20)  # mark end of phrase
 
