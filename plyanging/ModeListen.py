@@ -24,20 +24,38 @@ class ModeListen:
     def __init__(self, phrases: Sequence[Phrase],
                        sound_directory: Path,
                        non_stop:bool=False,
-                       start_count:int=0):
+                       start_count:int=0,
+                       phrase_repeat_count:int=2,
+                       translation_gap:int=2,
+                       foreign_first:bool=False):
         """
         :param phrases: sequence of phrases, list of phrases to run through.
+
         :param sound_directory: path, location to load phrase sound samples from.
+
         :optparam non_stop: bool, whether to wait for user input between phraeses.
+
         :optparam start_count: int, the index at which the first phrase passed
             to phrases starts at. Used if ModeListen is being passed only a
             slice of a large phrase list, to output the correct current phrase
             number to the user. Doesn't change behaviour of class in any way.
+
+        :optparam phrase_repeat_count: int, the number of times to repeat
+            a phrase in both german and english.
+
+        :optparam translation_gap: int, the number of seconds to wait between
+            reading the german and english versions of the sound.
+
+        :optparam foreign_first: bool, whether to read the foreign language
+            version of the phrase before the native version of the phrase.
         """
         self.phrases = phrases
         self.sound_directory = sound_directory
         self.non_stop = non_stop
         self.start_count = start_count
+        self.phrase_repeat_count = phrase_repeat_count
+        self.translation_gap = translation_gap
+        self.foreign_first = foreign_first
 
     def _user_wants_next_phrase(self) -> bool:
         """Presents user with choice whether wants to repeat the current
@@ -65,32 +83,51 @@ class ModeListen:
 
         return next_phrase
 
-    def _play_english_german(self, phrase:Phrase, count:int) -> None:
+    def _phrase_enter(self, count:int) -> None:
         print('-' * 20)  # mark beginning of phrase
         print('Phrase Number {0}'.format(count))
+
+    def _phrase_exit(self) -> None:
+        print('-' * 20)  # mark end of phrase
+
+    def _play_english(self, phrase:Phrase) -> None:
         play_sound = PlaySound(phrase=phrase, sound_directory=self.sound_directory)
-        # play english sound once.
         print('English: {0}'.format(phrase.english_text))
         play_sound.english_voice()
-        time.sleep(1)
-        # play german sound twice.
+
+    def _play_german(self, phrase:Phrase) -> None:
+        play_sound = PlaySound(phrase=phrase, sound_directory=self.sound_directory)
         print('German: {0}'.format(phrase.german_text))
         play_sound.german_voice()
-        time.sleep(2)
-        play_sound.english_voice()
-        time.sleep(1)
 
-        play_sound.german_voice()
-        print('-' * 20)  # mark end of phrase
+    # Hardcoded native and foreign here...
+    def _foreign_first(self, phrase:Phrase) -> None:
+        self._play_german(phrase=phrase)
+        time.sleep(self.translation_gap)
+        self._play_english(phrase=phrase)
+
+    def _native_first(self, phrase:Phrase) -> None:
+        self._play_english(phrase=phrase)
+        time.sleep(self.translation_gap)
+        self._play_german(phrase=phrase)
 
     def _phrase_loop(self, phrase:Phrase, count:int) -> None:
         while True:
-            self._play_english_german(phrase=phrase, count=count)
+            self._phrase_enter(count=count)
+
+            for repeat in range(self.phrase_repeat_count):
+                if self.foreign_first:
+                    self._foreign_first(phrase=phrase)
+                else:
+                    self._native_first(phrase=phrase)
+
             if self.non_stop:
+                self._phrase_exit()
                 break
 
             next_phrase = self._user_wants_next_phrase()
             if next_phrase:
+                self._phrase_exit()
                 break
             else:
                 continue
