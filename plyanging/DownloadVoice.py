@@ -31,7 +31,8 @@ class DownloadVoice:
         if len(phrase_text) <= 0:
             raise RuntimeError('phrase_text len <= 0')
         else:
-            filename = secure_filename(filename=phrase_text)
+            # TODO HACK, maximum filename length 50 chars
+            filename = secure_filename(filename=phrase_text[:50])
             # want to control the ending to always be .mp3
             # Note this is obviously only secure if the directory is safe
             # as well. Hopefully that's guaranteed...

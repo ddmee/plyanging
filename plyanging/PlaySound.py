@@ -17,7 +17,7 @@ class PlaySound:
         eng_v_path = self.download_voice.english_voice_path().resolve()
         if not eng_v_path.is_file():
             self.download_voice.save_english_voice()
-        playsound(eng_v_path)
+        playsound(str(eng_v_path))
         # suppose at this point we could return a new Phrase with
         # the location of Phrase.english_voice set to a string of the path.
         # don't need that yet...
@@ -27,5 +27,5 @@ class PlaySound:
         de_v_path = self.download_voice.german_voice_path().resolve()
         if not de_v_path.is_file():
             self.download_voice.save_german_voice()
-        playsound(de_v_path)
+        playsound(str(de_v_path))
         return de_v_path
