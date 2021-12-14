@@ -28,13 +28,27 @@ def cli():
                    ' the word list.')
 @click.option('--non-stop', is_flag=True,
               help='Do not stop for user input between phrases.')
+@click.option('--start-at', type=click.INT, default=0,
+               help='The phrase number to start reading from.')
+@click.option('--stop-at', type=click.INT, default=None,
+               help='The phrase number to stop reading at.')
+@click.option('--phrase-repeat-count', type=click.INT, default=2,
+               help='The number of times to repeat a phrase before continuing.')
+@click.option('--translation-gap', type=click.INT, default=2,
+               help='Number of seconds between reading translation and native '
+                    'phrase')
+@click.option('--foreign-first/--native-first', default=False,
+               help='Whether to read the foreign language or native version of '
+                    ' the phrase first. Defaults to reading native first.')
 def study(word_list:str, learning_mode:str, sound_directory:str,
-         phrase_order:str, non_stop:bool):
+          phrase_order:str, non_stop:bool, start_at:int, stop_at:int,
+          phrase_repeat_count:int, translation_gap:int, foreign_first:bool):
     """Provide a word list file of language phrases to study.
     """
     word_list_path = Path(word_list)
     read_word_list = ReadWordList(word_list_path=word_list_path)
-    phrases = list(read_word_list.phrases())
+    # Slicing a list [0:None], returns the entire list.
+    phrases = list(read_word_list.phrases())[start_at:stop_at]
 
     if phrase_order == 'random':
         random.shuffle(phrases)
@@ -43,7 +57,11 @@ def study(word_list:str, learning_mode:str, sound_directory:str,
     if learning_mode == 'listen':
         mode_listen = ModeListen(phrases=phrases,
                                  sound_directory=Path(sound_directory),
-                                 non_stop=non_stop)
+                                 non_stop=non_stop,
+                                 start_count=start_at,
+                                 phrase_repeat_count=phrase_repeat_count,
+                                 translation_gap=translation_gap,
+                                 foreign_first=foreign_first)
         mode_listen.cmdline()
     else:
         raise RuntimeError('Only "listen" mode is currently availble')
