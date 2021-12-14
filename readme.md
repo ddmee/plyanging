@@ -1,6 +1,6 @@
 ## Study a foreign language with whatever content you want
 
-Bored of traditional tools that have you study a pre-determined content?
+Bored of traditional tools that have you study pre-determined, set content?
 
 Just want to read the news or a new book in a foreign language?
 
