@@ -57,17 +57,23 @@ def study(word_list:str, learning_mode:str, sound_directory:str,
               help='Where to store the language sound files')
 @click.option('--non-stop', is_flag=True,
               help='Do not stop for user input between phrases.')
+@click.option('--start-at', type=click.INT, default=0,
+               help='The phrase number to start reading from.')
+@click.option('--stop-at', type=click.INT, default=None,
+               help='The phrase number to stop reading at.')
 def read(text_file:str, learning_mode:str, sound_directory:str,
-         non_stop:bool):
+         non_stop:bool, start_at:int, stop_at:int):
     """Read a text file contain german words, translating into english.
     """
     tftp = TextFileToPhrases(file_path=Path(text_file))
-    phrases = translate(phrases=tftp.phrase_list())
+    # Slicing a list [0:None], returns the entire list.
+    phrases = translate(phrases=tftp.phrase_list()[start_at:stop_at])
 
     if learning_mode == 'listen':
         mode_listen = ModeListen(phrases=phrases,
                                  sound_directory=Path(sound_directory),
-                                 non_stop=non_stop)
+                                 non_stop=non_stop,
+                                 start_count=start_at,)
         mode_listen.cmdline()
     else:
         raise RuntimeError('Only "listen" mode is currently availble')

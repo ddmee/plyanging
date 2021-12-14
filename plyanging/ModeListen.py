@@ -1,4 +1,5 @@
 # stdlib
+import itertools
 from pathlib import Path
 import time
 from typing import Sequence
@@ -22,15 +23,21 @@ class ModeListen:
     """
     def __init__(self, phrases: Sequence[Phrase],
                        sound_directory: Path,
-                       non_stop:bool=False):
+                       non_stop:bool=False,
+                       start_count:int=0):
         """
         :param phrases: sequence of phrases, list of phrases to run through.
         :param sound_directory: path, location to load phrase sound samples from.
         :optparam non_stop: bool, whether to wait for user input between phraeses.
+        :optparam start_count: int, the index at which the first phrase passed
+            to phrases starts at. Used if ModeListen is being passed only a
+            slice of a large phrase list, to output the correct current phrase
+            number to the user. Doesn't change behaviour of class in any way.
         """
         self.phrases = phrases
         self.sound_directory = sound_directory
         self.non_stop = non_stop
+        self.start_count = start_count
 
     def _user_wants_next_phrase(self) -> bool:
         """Presents user with choice whether wants to repeat the current
@@ -90,5 +97,7 @@ class ModeListen:
 
     def cmdline(self) -> None:
         """Run ModeListen in cmdline mode."""
-        for count, phrase in enumerate(self.phrases):
+        # specify start in enumerater() call because otherwise count says
+        # it starts from 0
+        for count, phrase in enumerate(self.phrases, start=self.start_count):
             self._phrase_loop(phrase=phrase, count=count)
