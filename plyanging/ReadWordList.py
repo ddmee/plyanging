@@ -11,7 +11,7 @@ class ReadWordList:
         self.word_list_path = word_list_path
 
     def phrases(self) -> Generator[Phrase, None, None]:
-        with open(self.word_list_path, 'rt') as word_fo:
+        with open(self.word_list_path, 'rt', encoding='utf-8') as word_fo:
             next_line = word_fo.readline()
             while next_line:  # reached EOF
                 next_line = next_line.strip()
