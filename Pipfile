@@ -8,9 +8,11 @@ click = "*"
 gtts = "*"
 filetype = {editable = true, git = "https://github.com/h2non/filetype.py"}
 playsound = "*"
-pyobjc = "*"
 nltk = "*"
 googletrans = "==3.1.0a0"
+django = "*"
+psycopg2-binary = "*"
+environs = "*"
 
 [dev-packages]
 pytest = "*"
