@@ -101,9 +101,10 @@ class TextFileToPhrases:
         self.split_method = split_method
 
     def phrase_list(self) -> list[Path]:
-        with open(self.file_path, 'rt') as open_file:
+        # Make sure the file is saved as utf-8 encoding to help handle
+        # german umlauts etc.
+        with open(self.file_path, 'rt', encoding='utf-8') as open_file:
             line_list = open_file.readlines()
-
         sentence_list = []
 
         for line in line_list:

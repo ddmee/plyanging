@@ -10,16 +10,26 @@ see https://github.com/ssut/py-googletrans/issues/319
 # stdlib
 from dataclasses import replace
 from typing import Generator
+import time
 # 3rd party
 from googletrans import Translator
 # local
 from plyanging.Phrase import Phrase
 
 
-def translate(phrases: list[Phrase]) -> Generator[Phrase]:
+def translate(phrases: list[Phrase]) -> Generator[Phrase, None, None]:
     """Translates a list of phrases, returning a new copy of the phrase list"""
     translator = Translator()
+    # Note, because not using google's official cloud api, google will rate
+    # limit us. We don't want to send too many requests to google in quick
+    # succession. So, wait at least 2 seconds between every request...
+    last_call = False
     for p in phrases:
+        if last_call:
+            remaining = 2 - (time.time() - last_call)
+            if remaining > 0:
+                time.sleep(remaining)
+            # else already more than 2 seconds have elapsed.
         # replace() returns a new copy of the dataclass object
         p = replace(p)
         # if we have german to translate to german...
@@ -37,5 +47,6 @@ def translate(phrases: list[Phrase]) -> Generator[Phrase]:
         # else both are None, so that's bad...
         else:
             raise RuntimeError('Nothing to translate for %r' % p)
+        last_call = time.time()
         yield p
 
