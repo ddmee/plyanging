@@ -2,6 +2,11 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const user = {
+  firstName: 'Donal',
+  lastName: 'Mee'
+}
+
 function App() {
   return (
     <div className="App">
@@ -18,6 +23,7 @@ function App() {
         >
           Learn React
         </a>
+        <p>This is a change made by {user.firstName} {user.lastName}</p>
       </header>
     </div>
   );
