@@ -41,6 +41,8 @@ services:
       dockerfile: front/react.Dockerfile
       target: dev
     container_name: front
+    volumes:
+      - ./front:/front
     ports:
       - "3000:3000"
     environment:
