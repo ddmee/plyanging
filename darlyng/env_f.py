@@ -1,6 +1,7 @@
 """Application configuration from env file
 """
 # stdlib
+from secrets import choice
 # third party
 from environs import Env
 
@@ -22,3 +23,10 @@ POSTGRES_PASSWORD = env.str("POSTGRES_PASSWORD")
 DJANGO_SUPERUSER_USERNAME = env.str("DJANGO_SUPERUSER_USERNAME")
 DJANGO_SUPERUSER_EMAIL = env.str("DJANGO_SUPERUSER_EMAIL")
 DJANGO_SUPERUSER_PASSWORD = env.str("DJANGO_SUPERUSER_PASSWORD")
+
+
+chars = (r'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"'
+         r'#$%&()*+-:;^_`{|}~')
+
+DJANGO_SECRET_KEY = env.str("DJANGO_SECRET_KEY",
+                            default=''.join(choice(chars) for x in range(50)))
