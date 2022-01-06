@@ -34,5 +34,6 @@ class UserPhraseLocation(models.Model):
     """
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     text_id = models.ForeignKey(Text, on_delete=models.CASCADE)
+    # potentially ought to make the primary-key the combination of user_id and
+    # text_id
     phrase_id = models.ForeignKey(Phrase, on_delete=models.CASCADE)
-

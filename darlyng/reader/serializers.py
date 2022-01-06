@@ -6,6 +6,7 @@ class TextSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Text
         fields = '__all__'
+        read_only_fields = ('creation_datetime', 'created_by')
 
 
 class PhraseSerializer(serializers.ModelSerializer):
@@ -14,6 +15,7 @@ class PhraseSerializer(serializers.ModelSerializer):
         # leave out text_id because should only return phrases from a specific
         # text
         fields = ('pk', 'phrase',)
+        read_only_fields = ('phrase', 'text_id')
 
 
 class UserPhraseLocationSerializer(serializers.ModelSerializer):
