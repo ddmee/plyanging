@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'reader.apps.ReaderConfig',
     'rest_framework',
+    'django_q',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -117,6 +118,17 @@ REST_FRAMEWORK = {
     ]
 }
 
+# Settings for Django-Q
+# https://mattsegal.dev/simple-scheduled-tasks.html
+
+Q_CLUSTER = {
+    'orm': 'default',  # should use django's ORM and database as a broker.
+    'workers': 4,
+    'timeout': 30,
+    'retry': 60,
+    'queue_limit': 50,
+    'bulk': 10,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

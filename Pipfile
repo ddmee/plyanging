@@ -16,6 +16,7 @@ environs = "*"
 djangorestframework = "*"
 pyyaml = "*"
 uritemplate = "*"
+django-q = "*"
 
 [dev-packages]
 pytest = "*"

@@ -83,6 +83,21 @@ def sent_tokenize_wrapper(text:str, language:str):
     return sent_tokenize(text=text, language=language)
 
 
+def text_to_phrase(
+    text: str,
+    split_method: Callable = sent_tokenize_wrapper,
+    language: str = 'german'
+) -> list[str]:
+    lines = filter(None, map(lambda x: x.strip(), text.splitlines()))
+    # using .extend because split_method returns a list of strings of
+    # each phrase it's found in each line, which we want to flatten into a
+    # single list of strings.
+    phrases = []
+    for line in lines:
+        phrases.extend(split_method(text=line, language=language))
+    return phrases
+
+
 class TextFileToPhrases:
     """Convert a text file into a list of phrases."""
     # TODO only german text atm...
@@ -104,11 +119,8 @@ class TextFileToPhrases:
         # Make sure the file is saved as utf-8 encoding to help handle
         # german umlauts etc.
         with open(self.file_path, 'rt', encoding='utf-8') as open_file:
-            line_list = open_file.readlines()
-        sentence_list = []
-
-        for line in line_list:
-            sentence_list.extend(self.split_method(text=line, language='german'))
+            sentence_list = text_to_phrase(text=open_file.read(),
+                                           split_method=self.split_method)
 
         # Now for each sentence, it's a phrase basically...
         # presuming it's german text.
