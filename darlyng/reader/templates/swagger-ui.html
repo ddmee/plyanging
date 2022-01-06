@@ -9,9 +9,10 @@
   <body>
     <div id="swagger-ui"></div>
     <script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+    {% load static %}
     <script>
     const ui = SwaggerUIBundle({
-        url: "{% url schema_url %}",
+        url: "{% static 'reader/openapi-schema.yml' %}",
         dom_id: '#swagger-ui',
         presets: [
           SwaggerUIBundle.presets.apis,

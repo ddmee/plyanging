@@ -15,7 +15,8 @@
     </style>
   </head>
   <body>
-    <redoc spec-url='{% url schema_url %}'></redoc>
+    {% load static %}
+    <redoc spec-url="{% static 'reader/openapi-schema.yml' %}"></redoc>
     <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"> </script>
   </body>
 </html>

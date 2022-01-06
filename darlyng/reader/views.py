@@ -2,13 +2,11 @@ from datetime import datetime
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.urls import path
-from django.views.generic import TemplateView
 from rest_framework import routers, viewsets, status, mixins, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework.schemas import get_schema_view
 from . import models
 from . import serializers
 
@@ -80,19 +78,6 @@ router.register(r'UserPhraseLocation', UserPhraseLocationViewSet)
 # ])
 urlpatterns = [
     path('Phrase/<int:text_id>/', PhraseList.as_view(), name='phrase-list'),
-    path('redoc/', TemplateView.as_view(
-        template_name='redoc.html',
-        extra_context={'schema_url':'openapi-schema'}
-    ), name='redoc'),
-    path('openapi', get_schema_view(
-        title='Reader',
-        description='API for darlyng'
-    ), name='openapi-schema'),
-    path('swagger-ui/', TemplateView.as_view(
-        template_name='swagger-ui.html',
-        extra_context={'schema_url':'openapi-schema'}
-    ), name='swagger-ui')
 ]
 
 urlpatterns += router.urls
-
