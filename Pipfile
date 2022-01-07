@@ -10,6 +10,13 @@ filetype = {editable = true, git = "https://github.com/h2non/filetype.py"}
 playsound = "==1.2.2"
 nltk = "*"
 googletrans = "==3.1.0a0"
+django = "*"
+psycopg2-binary = "*"
+environs = "*"
+djangorestframework = "*"
+pyyaml = "*"
+uritemplate = "*"
+django-q = "*"
 
 [dev-packages]
 pytest = "*"

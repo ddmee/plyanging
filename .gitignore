@@ -3,3 +3,6 @@
 __pycache__/**
 .sounds/**
 *.DS_STORE
+front/node_modules/*
+front/build/*
+temp_examples/*
