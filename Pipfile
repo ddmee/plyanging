@@ -17,6 +17,7 @@ djangorestframework = "*"
 pyyaml = "*"
 uritemplate = "*"
 django-q = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 pytest = "*"
