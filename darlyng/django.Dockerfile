@@ -7,8 +7,8 @@ FROM base AS prod
 COPY Pipfile .
 # COPY Pipfile.lock .
 RUN python3 -m pipenv install
-COPY plyanging plyanging
 COPY darlyng darlyng
 COPY scripts scripts
+COPY plyanging darlyng/plyanging
 # Set .env by supplying --env-file when calling docker run or copy the .env file into the container when creating it.
 CMD [ "/bin/bash", "scripts/container_run.sh" ]

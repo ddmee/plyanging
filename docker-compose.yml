@@ -21,6 +21,20 @@ services:
       - alpha
     env_file:
       - .env
+
+  qcluster:
+    image: django:darlyng
+    container_name: qcluster
+    command: /bin/bash scripts/qcluster_run.sh
+    networks:
+      - alpha
+    depends_on:
+      - django
+    profiles:
+      - alpha
+    env_file:
+      - .env
+
   posty:
     image: postgres:13
     container_name: posty
