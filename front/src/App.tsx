@@ -1,30 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Library from './components/Library';
 
-const user = {
-  firstName: 'Donal',
-  lastName: 'Mee'
+function Welcome(props: any) {
+  return <h1>{props.name} </h1>;
 }
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>This is a change made by {user.firstName} {user.lastName}</p>
-      </header>
+      <Welcome name='Darlyng'/>
+      <Library />
     </div>
   );
 }

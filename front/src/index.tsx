@@ -2,20 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Clock from './Clock';
-import Library from './Library';
 import reportWebVitals from './reportWebVitals';
-
-
-function Welcome(props: any) {
-  return <h1>{props.name} </h1>;
-}
-
 
 ReactDOM.render(
   <React.StrictMode>
-    <Welcome name='Darlyng' />
-    <Library />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
