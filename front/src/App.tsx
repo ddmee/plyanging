@@ -1,4 +1,5 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import './App.css';
 import Library from './components/Library';
 import NavBar from './components/NavBar';
@@ -12,7 +13,7 @@ function App() {
     <div className="App">
       <NavBar />
       <Welcome name='Darlyng'/>
-      <Library />
+      <Outlet />
     </div>
   );
 }

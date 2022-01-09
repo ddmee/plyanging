@@ -9,14 +9,23 @@ import './index.css';
 import App from './App';
 import LibraryPage from './routes/LibraryPage';
 import LoginPage from './routes/LoginPage';
+import NotFound from './routes/NotFound';
+import TextPage from './routes/TextPage';
 import reportWebVitals from './reportWebVitals';
+
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/LibraryPage" element={<LibraryPage />} />
-      <Route path="/LoginPage" element={<LoginPage />} />
+      <Route path="/" element={<App />}>
+        <Route path="LibraryPage" element={<LibraryPage />} />
+        <Route path="LoginPage" element={<LoginPage />} />
+        <Route path="Text/:textId" element={<TextPage />} />
+      </Route>
+      <Route path="*"  // * will only match when no other routes do.
+      // no url match route.
+        element={<NotFound />}
+      />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
