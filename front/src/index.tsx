@@ -18,6 +18,9 @@ ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
+        <Route
+          index // setting library component as the default thing to render inside the app outlet
+          element={<LibraryPage />}  />
         <Route path="LibraryPage" element={<LibraryPage />} />
         <Route path="LoginPage" element={<LoginPage />} />
         <Route path="Text/:textId" element={<TextPage />} />
